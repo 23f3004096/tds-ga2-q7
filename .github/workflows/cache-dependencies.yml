@@ -1,0 +1,25 @@
+name: Cache Dependencies Test
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Cache dependencies
+      - name: prime-cache-e7824fd
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache  # You can change this to your dependency folder
+          key: cache-e7824fd
+
+      - name: Show cache result
+        run: echo "Cache hit? ${{ steps.cache.outputs.cache-hit }}"
